@@ -23,9 +23,11 @@ async fn main() -> Result<(), Error> {
         .allow_headers(tower_http::cors::Any)
         .allow_methods(tower_http::cors::Any)
         .allow_origin(tower_http::cors::Any);
-    let app = Router::new().route("/hello", get(root)).layer(cors_layer);
-    // .layer(trace_layer)
-    // .layer(CompressionLayer::new().gzip(true).deflate(true));
+    let app = Router::new()
+        .route("/hello", get(root))
+        .layer(cors_layer)
+        .layer(trace_layer)
+        .layer(CompressionLayer::new().gzip(true).deflate(true));
     let handler = ServiceBuilder::new()
         .map_request(process_request)
         .map_response(process_response)
