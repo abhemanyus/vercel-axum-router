@@ -3,5 +3,6 @@
     "api/main.rs": {
       "runtime": "vercel-rust@4.0.6"
     }
-  }
+  },
+  "rewrites": [{ "source": "/(.*)", "destination": "/api/main" }]
 }

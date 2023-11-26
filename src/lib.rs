@@ -1,4 +1,4 @@
-use axum::body::HttpBody;
+use axum::body::{Bytes, HttpBody};
 use axum::response::IntoResponse;
 use std::{future::Future, pin::Pin};
 use tower::Layer;
@@ -86,7 +86,7 @@ where
         let fut = async move {
             let resp = fut.await?;
             let (parts, mut body) = resp.into_response().into_parts();
-            let bytes = body.data().await.unwrap()?;
+            let bytes = body.data().await.unwrap_or(Ok(Bytes::new()))?;
             let bytes: &[u8] = &bytes;
             let resp: axum::response::Response<Body> = match std::str::from_utf8(bytes) {
                 Ok(s) => axum::response::Response::from_parts(parts, s.into()),

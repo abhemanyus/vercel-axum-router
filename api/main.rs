@@ -3,7 +3,7 @@ use vercel_runtime::{process_request, process_response, run_service, Error, Serv
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
-    let app = Router::new().route("/", get(root));
+    let app = Router::new().route("/hello", get(root));
     let handler = ServiceBuilder::new()
         .map_request(process_request)
         .map_response(process_response)
