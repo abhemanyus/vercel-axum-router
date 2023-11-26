@@ -1,11 +1,16 @@
-use axum::routing::get;
-use vercel_runtime::{run, Error};
+use axum::{routing::get, Router};
+use vercel_runtime::{process_request, process_response, run_service, Error, ServiceBuilder};
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
-    let app = axum::Router::new().route("/", get(|_| "Hello, world!".into()));
-    let app = tower::ServiceBuilder::new()
+    let app = Router::new().route("/", get(root));
+    let handler = ServiceBuilder::new()
+        .map_request(process_request)
+        .map_response(process_response)
         .layer(vermicelli::LambdaLayer::default())
         .service(app);
-    run(app).await
+    run_service(handler).await
+}
+async fn root() -> &'static str {
+    "Hello, World!"
 }
