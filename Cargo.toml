@@ -7,10 +7,14 @@ edition = "2021"
 
 [dependencies]
 axum = "0.6.20"
+dotenv = "0.15.0"
 serde_json = { version = "1.0.108" }
 tokio = { version = "1.34.0", features = ["rt", "macros"] }
 tower = "0.4.13"
+tower-http = { version = "0.5.0", features = ["cors", "trace", "compression-gzip", "compression-deflate"] }
 tower-service = "0.3.2"
+tracing = "0.1.40"
+tracing-subscriber = { version = "0.3.18", features = ["json"] }
 vercel_runtime = "1.1.0"
 
 [[bin]]
