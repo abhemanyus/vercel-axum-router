@@ -1110,7 +1110,7 @@ dependencies = [
  "axum",
  "serde_json",
  "tokio",
- "tower 0.4.13",
+ "tower 0.5.1",
  "tower-service",
  "vercel_runtime",
 ]
